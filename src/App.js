@@ -1,23 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import SelectInput from './components/SelectInput';
+import { useState } from 'react';
+import List from './components/List';
+import {Route,Switch} from 'react-router-dom';
+import CustomForm from './components/customForm';
 
 function App() {
+  const [data,setData] = useState();
+  const [id,setID]=useState(null);
+  const set = (props) =>
+  {
+    setData(props);
+  }
+  const setPropId = (props) =>
+  {
+    setID(props)
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+      <Route path='/' exact>
+        <SelectInput id={id}/>
+      </Route>
+      <Route path='/list' >
+        <List setD={set} setId={setPropId}/>
+        </Route>
+        <Route path='/form'>
+         {data && <CustomForm data={data}/>}
+        </Route>
+        </Switch>
     </div>
   );
 }
